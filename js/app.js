@@ -90,9 +90,10 @@ async function initializePuter() {
         const isSignedIn = await puter.auth.isSignedIn();
         
         if (!isSignedIn) {
-            // Connexion automatique (Puter gère l'interface)
-            console.log('🔐 Connexion à Puter.js...');
-            await puter.auth.signIn();
+            console.log('🔐 L\'utilisateur n\'est pas connecté à Puter.js');
+            AppState.isPuterInitialized = false;
+            loadGalleryFromLocal();
+            return false;
         }
         
         AppState.isPuterInitialized = true;
@@ -193,7 +194,8 @@ function initNavigation() {
 // ===========================
 function initImageUpload() {
     // Click to select
-    DOM.selectImageBtn.addEventListener('click', () => {
+    DOM.selectImageBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         DOM.imageInput.click();
     });
     
@@ -676,17 +678,19 @@ function showToast(message, type = 'success') {
 async function init() {
     console.log('Initialisation de l\'application...');
     
-    // Initialize Puter
-    await initializePuter();
-    
-    // Initialize all features
+    // Initialize all features (UI first)
     initNavigation();
     initImageUpload();
     initControls();
     initGalleryModal();
     
-    // Load gallery
-    renderGallery();
+    // Initialize Puter (Async, don't block the UI)
+    initializePuter().then(() => {
+        console.log('Puter.js initialisé en arrière-plan');
+        renderGallery();
+    });
+    
+
     
     console.log('Application prête !');
     
