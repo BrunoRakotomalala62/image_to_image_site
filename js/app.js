@@ -304,7 +304,8 @@ function initControls() {
 function updateModelInfo() {
     const modelInfoText = {
         'seedance': 'Idéal pour des transformations créatives et artistiques',
-        'seedream': 'Génération haute résolution 2K avec détails exceptionnels'
+        'seedream': 'Modèle haute performance pour des résultats détaillés en 2K',
+        'nano-banana': 'Gemini 2.5 Image - Performance ultra-rapide'
     };
     
     const icon = DOM.modelInfo.querySelector('i');
@@ -391,70 +392,30 @@ function getModelParameters() {
 }
 
 async function simulateImageTransformation() {
-    // Dans une vraie application, vous appelleriez l'API d'IA ici
-    // Pour la démo, on retourne l'image source
-    // Vous devrez remplacer ceci par l'appel réel à l'API Seedance/Seedream
-    
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            // Créer un canvas pour simuler une transformation
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = img.width;
-                canvas.height = img.height;
-                
-                // Dessiner l'image
-                ctx.drawImage(img, 0, 0);
-                
-                // Appliquer un effet de démonstration
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-                
-                // Effet de saturation (juste pour la démo)
-                for (let i = 0; i < data.length; i += 4) {
-                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-                    const diff = [data[i] - avg, data[i + 1] - avg, data[i + 2] - avg];
-                    data[i] += diff[0] * 0.3;
-                    data[i + 1] += diff[1] * 0.3;
-                    data[i + 2] += diff[2] * 0.3;
-                }
-                
-                ctx.putImageData(imageData, 0, 0);
-                
-                // Convertir en URL
-                resolve(canvas.toDataURL('image/png'));
-            };
-            img.src = AppState.currentImageUrl;
-        }, 2000);
-    });
-    
-    /* EXEMPLE D'APPEL RÉEL À UNE API :
-    
+    // Appel réel à l'API Puter.js
     try {
-        const response = await fetch('https://api-endpoint.com/transform', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                model: AppState.currentModel,
-                prompt: DOM.promptInput.value.trim(),
-                image: AppState.currentImageUrl,
-                aspectRatio: AppState.aspectRatio,
-                strength: AppState.strength
-            })
+        const prompt = DOM.promptInput.value.trim();
+        const base64Image = AppState.currentImageUrl.split(',')[1];
+        
+        // Mapper les modèles fictifs vers les modèles réels de Puter.js
+        let puterModel = "gemini-2.5-flash-image-preview"; // Par défaut
+        if (AppState.currentModel === 'seedream') {
+            puterModel = "gemini-2.5-flash-image-preview";
+        } else if (AppState.currentModel === 'nano-banana') {
+            puterModel = "gemini-2.5-flash-image-preview"; // Nano Banana n'est pas un modèle officiel Puter
+        }
+
+        const imageElement = await puter.ai.txt2img(prompt, {
+            model: puterModel,
+            input_image: base64Image,
+            input_image_mime_type: AppState.currentImage.type
         });
         
-        const result = await response.json();
-        return result.imageUrl;
-        
+        return imageElement.src;
     } catch (error) {
-        throw new Error('Erreur d\'API: ' + error.message);
+        console.error('Erreur Puter AI:', error);
+        throw new Error('Erreur lors de la transformation avec Puter.js: ' + error.message);
     }
-    */
 }
 
 function updateProgress(percent, text) {
