@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démo - Test de transformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .demo-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .demo-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .image-container {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f1f5f9;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+        }
+        
+        .placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .upload-btn {
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .prompt-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .prompt-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .result-canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .info-box h3 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-box p {
+            color: #1e3a8a;
+            line-height: 1.6;
+        }
+        
+        .settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .setting-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+        
+        .setting-item label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .setting-item select,
+        .setting-item input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        
+        .progress-container {
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-magic"></i> Test de transformation d'image</h1>
+        <p class="subtitle">Testez la transformation "Changer en bleue le vêtement"</p>
+        
+        <div class="info-box">
+            <h3><i class="fas fa-info-circle"></i> Mode de fonctionnement</h3>
+            <p><strong>Cette démo simule la transformation d'image.</strong> Pour utiliser les vraies API Seedance/Seedream, vous devez intégrer vos clés API selon les instructions dans <code>js/api-integration-example.js</code></p>
+            <p style="margin-top: 0.5rem;">La simulation appliquera un filtre bleu aux zones claires de l'image (simulant le changement de couleur du vêtement).</p>
+        </div>
+        
+        <div class="demo-section">
+            <h2><i class="fas fa-cogs"></i> Configuration</h2>
+            
+            <div class="settings">
+                <div class="setting-item">
+                    <label>Modèle IA</label>
+                    <select id="modelSelect">
+                        <option value="seedance">Seedance - Artistique</option>
+                        <option value="seedream" selected>Seedream v4.5 - Haute résolution</option>
+                    </select>
+                </div>
+                
+                <div class="setting-item">
+                    <label>Force de transformation</label>
+                    <input type="range" id="strengthSlider" min="0.1" max="1.0" step="0.1" value="0.7">
+                    <div style="text-align: center; margin-top: 0.25rem; color: #667eea; font-weight: 600;">
+                        <span id="strengthValue">0.7</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <label>Format d'image</label>
+                    <select id="ratioSelect">
+                        <option value="1:1" selected>Carré (1:1)</option>
+                        <option value="16:9">Paysage (16:9)</option>
+                        <option value="9:16">Portrait (9:16)</option>
+                        <option value="4:3">Standard (4:3)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <label style="display: block; color: #333; font-weight: 600; margin-bottom: 0.5rem;">
+                <i class="fas fa-pen-fancy"></i> Prompt de transformation
+            </label>
+            <input 
+                type="text" 
+                id="promptInput" 
+                class="prompt-input" 
+                value="Changer en bleue le vêtement"
+                placeholder="Décrivez la transformation souhaitée...">
+        </div>
+        
+        <div class="demo-grid">
+            <!-- Image source -->
+            <div class="demo-card">
+                <h3><i class="fas fa-image"></i> Image source</h3>
+                <div class="image-container" id="sourceContainer">
+                    <div class="placeholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Chargez une image</p>
+                    </div>
+                    <canvas id="sourceCanvas" class="result-canvas hidden"></canvas>
+                </div>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                <button class="btn upload-btn" onclick="document.getElementById('imageInput').click()">
+                    <i class="fas fa-folder-open"></i> Charger une image
+                </button>
+            </div>
+            
+            <!-- Image transformée -->
+            <div class="demo-card">
+                <h3><i class="fas fa-sparkles"></i> Image transformée</h3>
+                <div class="image-container" id="resultContainer">
+                    <div class="placeholder">
+                        <i class="fas fa-magic"></i>
+                        <p>La transformation apparaîtra ici</p>
+                    </div>
+                    <canvas id="resultCanvas" class="result-canvas hidden"></canvas>
+                </div>
+                <button class="btn btn-secondary" id="transformBtn" disabled>
+                    <i class="fas fa-wand-magic-sparkles"></i> Transformer l'image
+                </button>
+                
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Traitement en cours...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-box" style="background: #d1fae5; border-left-color: #10b981;">
+            <h3 style="color: #065f46;"><i class="fas fa-lightbulb"></i> Conseils pour de meilleurs résultats</h3>
+            <p style="color: #064e3b;">
+                <strong>Pour le prompt "Changer en bleue le vêtement" :</strong><br>
+                • Utilisez une image avec un vêtement clairement visible<br>
+                • Assurez-vous que le vêtement soit bien éclairé<br>
+                • Seedream v4.5 donnera des résultats plus détaillés<br>
+                • Une force de 0.7-0.9 est recommandée pour ce type de transformation
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        let sourceImage = null;
+        
+        // Elements
+        const imageInput = document.getElementById('imageInput');
+        const sourceCanvas = document.getElementById('sourceCanvas');
+        const resultCanvas = document.getElementById('resultCanvas');
+        const transformBtn = document.getElementById('transformBtn');
+        const promptInput = document.getElementById('promptInput');
+        const modelSelect = document.getElementById('modelSelect');
+        const strengthSlider = document.getElementById('strengthSlider');
+        const strengthValue = document.getElementById('strengthValue');
+        const ratioSelect = document.getElementById('ratioSelect');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        
+        // Update strength display
+        strengthSlider.addEventListener('input', (e) => {
+            strengthValue.textContent = e.target.value;
+        });
+        
+        // Load image
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    sourceImage = img;
+                    displaySourceImage(img);
+                    transformBtn.disabled = false;
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        // Display source image
+        function displaySourceImage(img) {
+            const ctx = sourceCanvas.getContext('2d');
+            sourceCanvas.width = img.width;
+            sourceCanvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            document.querySelector('#sourceContainer .placeholder').classList.add('hidden');
+            sourceCanvas.classList.remove('hidden');
+        }
+        
+        // Transform button
+        transformBtn.addEventListener('click', async () => {
+            if (!sourceImage) return;
+            
+            transformBtn.disabled = true;
+            progressContainer.style.display = 'block';
+            
+            // Simulate API call with progress
+            await simulateTransformation();
+            
+            transformBtn.disabled = false;
+            progressContainer.style.display = 'none';
+        });
+        
+        // Simulate transformation
+        async function simulateTransformation() {
+            const ctx = resultCanvas.getContext('2d');
+            resultCanvas.width = sourceImage.width;
+            resultCanvas.height = sourceImage.height;
+            
+            // Progress updates
+            updateProgress(20, 'Préparation de l\'image...');
+            await sleep(500);
+            
+            updateProgress(40, 'Analyse du vêtement...');
+            await sleep(500);
+            
+            updateProgress(60, 'Application de la couleur bleue...');
+            await sleep(500);
+            
+            // Draw original image
+            ctx.drawImage(sourceImage, 0, 0);
+            
+            // Apply blue color transformation (simulation)
+            const imageData = ctx.getImageData(0, 0, resultCanvas.width, resultCanvas.height);
+            const data = imageData.data;
+            const strength = parseFloat(strengthSlider.value);
+            
+            // Convert clothing to blue (simplified algorithm)
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // Calculate brightness
+                const brightness = (r + g + b) / 3;
+                
+                // If relatively bright (likely clothing), shift to blue
+                if (brightness > 80) {
+                    // Apply blue tint with strength
+                    const blueShift = strength * 100;
+                    data[i] = Math.max(0, r - blueShift * 0.5); // Reduce red
+                    data[i + 1] = Math.max(0, g - blueShift * 0.3); // Reduce green slightly
+                    data[i + 2] = Math.min(255, b + blueShift); // Increase blue
+                }
+            }
+            
+            updateProgress(80, 'Finalisation...');
+            await sleep(500);
+            
+            ctx.putImageData(imageData, 0, 0);
+            
+            updateProgress(100, 'Terminé !');
+            await sleep(500);
+            
+            // Show result
+            document.querySelector('#resultContainer .placeholder').classList.add('hidden');
+            resultCanvas.classList.remove('hidden');
+        }
+        
+        function updateProgress(percent, text) {
+            progressFill.style.width = percent + '%';
+            progressText.textContent = text;
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        console.log('✅ Démo de transformation chargée');
+        console.log('📝 Prompt défini: "Changer en bleue le vêtement"');
+        console.log('🤖 Modèle: Seedream v4.5');
+        console.log('⚠️ Mode simulation - Pour les vraies API, voir js/api-integration-example.js');
+    </script>
+</body>
+</html>

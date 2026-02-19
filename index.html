@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Transform - Seedance & Seedream</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-magic"></i>
+                <span>AI Image Transform</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="transform">
+                    <i class="fas fa-wand-magic-sparkles"></i> Transform
+                </button>
+                <button class="nav-btn" data-section="gallery">
+                    <i class="fas fa-images"></i> Galerie
+                </button>
+                <button class="nav-btn" data-section="about">
+                    <i class="fas fa-info-circle"></i> À propos
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Transform Section -->
+        <section id="transform" class="section active">
+            <div class="container">
+                <div class="hero">
+                    <h1 class="hero-title">Transformez vos images avec l'IA</h1>
+                    <p class="hero-subtitle">Utilisez la puissance de Seedance et Seedream pour créer des images uniques</p>
+                </div>
+
+                <div class="workspace">
+                    <!-- Upload Area -->
+                    <div class="upload-section">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h3>Importez votre image</h3>
+                            <p>Glissez-déposez ou cliquez pour sélectionner</p>
+                            <input type="file" id="imageInput" accept="image/*" hidden>
+                            <button class="btn btn-primary" id="selectImageBtn">
+                                <i class="fas fa-folder-open"></i> Sélectionner une image
+                            </button>
+                        </div>
+
+                        <!-- Image Preview -->
+                        <div class="image-preview hidden" id="imagePreview">
+                            <div class="preview-header">
+                                <h3>Image source</h3>
+                                <button class="btn btn-small btn-secondary" id="changeImageBtn">
+                                    <i class="fas fa-sync"></i> Changer
+                                </button>
+                            </div>
+                            <div class="preview-container">
+                                <img id="previewImage" src="" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls Area -->
+                    <div class="controls-section" id="controlsSection">
+                        <div class="controls-card">
+                            <h3><i class="fas fa-sliders-h"></i> Paramètres de transformation</h3>
+                            
+                            <!-- Model Selection -->
+                            <div class="form-group">
+                                <label for="modelSelect">
+                                    <i class="fas fa-brain"></i> Modèle IA
+                                </label>
+                                <select id="modelSelect" class="form-select">
+                                    <option value="seedance">Seedance - Transformations artistiques</option>
+                                    <option value="seedream">Seedream v4.5 - Haute résolution 2K</option>
+                                </select>
+                                <div class="model-info" id="modelInfo">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Idéal pour des transformations créatives et artistiques</span>
+                                </div>
+                            </div>
+
+                            <!-- Prompt Input -->
+                            <div class="form-group">
+                                <label for="promptInput">
+                                    <i class="fas fa-pen-fancy"></i> Description de la transformation
+                                </label>
+                                <textarea 
+                                    id="promptInput" 
+                                    class="form-textarea" 
+                                    rows="4"
+                                    placeholder="Décrivez comment vous voulez transformer votre image...&#10;Ex: Transforme cette image en peinture impressionniste avec des couleurs vibrantes et un style Van Gogh"></textarea>
+                                <div class="char-count">
+                                    <span id="charCount">0</span> caractères
+                                </div>
+                            </div>
+
+                            <!-- Strength Slider -->
+                            <div class="form-group">
+                                <label for="strengthSlider">
+                                    <i class="fas fa-adjust"></i> Force de la transformation
+                                    <span class="value-display" id="strengthValue">0.8</span>
+                                </label>
+                                <input 
+                                    type="range" 
+                                    id="strengthSlider" 
+                                    class="form-slider" 
+                                    min="0.1" 
+                                    max="1.0" 
+                                    step="0.05" 
+                                    value="0.8">
+                                <div class="slider-labels">
+                                    <span>Subtile</span>
+                                    <span>Forte</span>
+                                </div>
+                            </div>
+
+                            <!-- Aspect Ratio -->
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-crop"></i> Format d'image
+                                </label>
+                                <div class="ratio-grid">
+                                    <button class="ratio-btn active" data-ratio="1:1">
+                                        <i class="fas fa-square"></i> 1:1
+                                    </button>
+                                    <button class="ratio-btn" data-ratio="16:9">
+                                        <i class="fas fa-rectangle-landscape"></i> 16:9
+                                    </button>
+                                    <button class="ratio-btn" data-ratio="9:16">
+                                        <i class="fas fa-rectangle-portrait"></i> 9:16
+                                    </button>
+                                    <button class="ratio-btn" data-ratio="4:3">
+                                        <i class="fas fa-tv"></i> 4:3
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Generate Button -->
+                            <button class="btn btn-generate" id="generateBtn" disabled>
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                                <span>Générer la transformation</span>
+                            </button>
+
+                            <!-- Progress Bar -->
+                            <div class="progress-container hidden" id="progressContainer">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                                <div class="progress-text" id="progressText">
+                                    Initialisation...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Area -->
+                    <div class="result-section hidden" id="resultSection">
+                        <div class="result-card">
+                            <div class="result-header">
+                                <h3><i class="fas fa-sparkles"></i> Image transformée</h3>
+                                <div class="result-actions">
+                                    <button class="btn btn-small btn-primary" id="downloadBtn">
+                                        <i class="fas fa-download"></i> Télécharger
+                                    </button>
+                                    <button class="btn btn-small btn-secondary" id="saveToGalleryBtn">
+                                        <i class="fas fa-save"></i> Sauvegarder
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="result-container">
+                                <img id="resultImage" src="" alt="Result">
+                            </div>
+                            <div class="result-footer">
+                                <button class="btn btn-secondary" id="newTransformBtn">
+                                    <i class="fas fa-rotate"></i> Nouvelle transformation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-images"></i> Ma Galerie</h2>
+                    <p>Toutes vos créations en un seul endroit</p>
+                </div>
+                <div class="gallery-grid" id="galleryGrid">
+                    <div class="gallery-empty">
+                        <i class="fas fa-image"></i>
+                        <p>Aucune image dans votre galerie</p>
+                        <p class="small">Créez votre première transformation pour commencer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="about-content">
+                    <h2><i class="fas fa-info-circle"></i> À propos</h2>
+                    
+                    <div class="about-card">
+                        <h3><i class="fas fa-magic"></i> AI Image Transform</h3>
+                        <p>Une application web moderne qui utilise les modèles d'IA les plus avancés pour transformer vos images de manière créative et artistique.</p>
+                    </div>
+
+                    <div class="about-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>Seedance</h4>
+                            <p>Modèle spécialisé dans les transformations artistiques et créatives avec une compréhension profonde du contexte.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <h4>Seedream v4.5</h4>
+                            <p>Génération d'images en résolution native 2K avec une qualité exceptionnelle et un excellent rendu des détails.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <h4>Puter.js</h4>
+                            <p>Intégration cloud pour le stockage et la gestion de vos fichiers de manière sécurisée et accessible.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h4>Rapide</h4>
+                            <p>Interface optimisée pour une expérience fluide et des transformations rapides.</p>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack">
+                        <h3><i class="fas fa-code"></i> Technologies utilisées</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Puter.js</span>
+                            <span class="tech-tag">Seedance AI</span>
+                            <span class="tech-tag">Seedream v4.5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AI Image Transform. Propulsé par l'intelligence artificielle.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Gallery Image View -->
+    <div class="modal hidden" id="galleryModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="Gallery Image">
+            </div>
+            <div class="modal-info" id="modalInfo">
+                <p><strong>Modèle:</strong> <span id="modalModel"></span></p>
+                <p><strong>Prompt:</strong> <span id="modalPrompt"></span></p>
+                <p><strong>Date:</strong> <span id="modalDate"></span></p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="modalDownload">
+                    <i class="fas fa-download"></i> Télécharger
+                </button>
+                <button class="btn btn-danger" id="modalDelete">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast hidden" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Message</span>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

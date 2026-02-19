@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue - AI Image Transform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        h1 {
+            color: white;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease;
+            animation-fill-mode: both;
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card h2 {
+            color: #333;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 8px 25px rgba(240, 147, 251, 0.6);
+        }
+        
+        .features {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .features h2 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .feature-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-item h3 {
+            color: #333;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .cta {
+            text-align: center;
+            padding: 3rem 0;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+        
+        .cta h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            padding: 2rem 0;
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="logo">🎨✨</div>
+            <h1>AI Image Transform</h1>
+            <p class="subtitle">Transformez vos images avec l'intelligence artificielle</p>
+        </div>
+        
+        <!-- Quick Start Cards -->
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">🚀</div>
+                <h2>Lancer l'app</h2>
+                <p>Commencez immédiatement à transformer vos images avec Seedance et Seedream.</p>
+                <a href="index.html" class="btn">Démarrer</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🧪</div>
+                <h2>Tester</h2>
+                <p>Vérifiez que toutes les fonctionnalités sont opérationnelles avant de commencer.</p>
+                <a href="test.html" class="btn btn-secondary">Tests</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h2>Documentation</h2>
+                <p>Consultez les guides complets, exemples et tutoriels d'intégration.</p>
+                <a href="README.md" class="btn">Lire les docs</a>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="features">
+            <h2>Fonctionnalités principales</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon">🖼️</div>
+                    <h3>Upload facile</h3>
+                    <p>Glisser-déposer ou sélection de fichiers</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="icon">🤖</div>
+                    <h3>2 modèles IA</h3>
+                    <p>Seedance & Seedream v4.5</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="icon">🎨</div>
+                    <h3>Styles variés</h3>
+                    <p>Artistique, photo, manga, etc.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="icon">💾</div>
+                    <h3>Cloud gratuit illimité</h3>
+                    <p>Stockage Puter.js sans limites</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="icon">📱</div>
+                    <h3>100% Responsive</h3>
+                    <p>Mobile, tablette, desktop</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="icon">⚡</div>
+                    <h3>Ultra rapide</h3>
+                    <p>Interface optimisée et fluide</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta">
+            <h2>Prêt à créer des images uniques ?</h2>
+            <div class="btn-group">
+                <a href="index.html" class="btn">🚀 Lancer l'application</a>
+                <a href="QUICKSTART.md" class="btn btn-secondary">📖 Guide de démarrage</a>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2026 AI Image Transform • Propulsé par Seedance, Seedream & Puter.js</p>
+            <p style="margin-top: 1rem;">
+                <a href="README.md" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Documentation</a>
+                <a href="EXAMPLES.md" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Exemples</a>
+                <a href="PROJECT_SUMMARY.md" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Récapitulatif</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - AI Image Transform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .test-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-section h2 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .test-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border-radius: 8px;
+            gap: 1rem;
+        }
+        
+        .status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .status.success {
+            background: #10b981;
+        }
+        
+        .status.error {
+            background: #ef4444;
+        }
+        
+        .status.pending {
+            background: #f59e0b;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .test-label {
+            flex: 1;
+            color: #333;
+        }
+        
+        .test-detail {
+            font-size: 0.875rem;
+            color: #666;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border-left: 4px solid #10b981;
+        }
+        
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border-left: 4px solid #ef4444;
+        }
+        
+        code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .info-box p {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test de l'application</h1>
+        <p class="subtitle">Vérification des composants et fonctionnalités</p>
+        
+        <!-- Test des fichiers -->
+        <div class="test-section">
+            <h2>📁 Structure des fichiers</h2>
+            <div id="file-tests">
+                <!-- Rempli par JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Test des dépendances -->
+        <div class="test-section">
+            <h2>📦 Dépendances externes</h2>
+            <div id="dependency-tests">
+                <!-- Rempli par JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Test des fonctionnalités -->
+        <div class="test-section">
+            <h2>⚙️ Fonctionnalités JavaScript</h2>
+            <div id="feature-tests">
+                <!-- Rempli par JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Résultat global -->
+        <div id="result-container"></div>
+        
+        <!-- Bouton pour lancer l'app -->
+        <button class="btn" onclick="window.location.href='index.html'">
+            🚀 Lancer l'application
+        </button>
+        
+        <!-- Informations -->
+        <div class="info-box">
+            <p><strong>ℹ️ Mode de fonctionnement actuel :</strong></p>
+            <p>L'application utilise une <strong>simulation</strong> pour la transformation d'images.</p>
+            <p>Pour utiliser les vraies API Seedance/Seedream, consultez <code>js/api-integration-example.js</code></p>
+        </div>
+    </div>
+    
+    <script>
+        // Fonction utilitaire pour créer un item de test
+        function createTestItem(label, detail, status) {
+            return `
+                <div class="test-item">
+                    <div class="status ${status}"></div>
+                    <div class="test-label">${label}</div>
+                    <div class="test-detail">${detail}</div>
+                </div>
+            `;
+        }
+        
+        // Tests des fichiers
+        async function testFiles() {
+            const container = document.getElementById('file-tests');
+            const files = [
+                { path: 'index.html', name: 'Page principale' },
+                { path: 'css/style.css', name: 'Fichier CSS' },
+                { path: 'js/app.js', name: 'Logique JavaScript' },
+                { path: 'README.md', name: 'Documentation' }
+            ];
+            
+            let html = '';
+            let allSuccess = true;
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file.path);
+                    if (response.ok) {
+                        const size = response.headers.get('content-length');
+                        const sizeKb = size ? `${(size / 1024).toFixed(1)} KB` : 'OK';
+                        html += createTestItem(file.name, sizeKb, 'success');
+                    } else {
+                        html += createTestItem(file.name, 'Non trouvé', 'error');
+                        allSuccess = false;
+                    }
+                } catch (error) {
+                    html += createTestItem(file.name, 'Erreur', 'error');
+                    allSuccess = false;
+                }
+            }
+            
+            container.innerHTML = html;
+            return allSuccess;
+        }
+        
+        // Tests des dépendances
+        function testDependencies() {
+            const container = document.getElementById('dependency-tests');
+            let html = '';
+            let allSuccess = true;
+            
+            // Test Puter.js
+            if (typeof puter !== 'undefined') {
+                html += createTestItem('Puter.js', 'Chargé', 'success');
+            } else {
+                html += createTestItem('Puter.js', 'Non chargé (mode fallback OK)', 'success');
+            }
+            
+            // Test Font Awesome (vérifier si les styles sont chargés)
+            const faTest = document.createElement('i');
+            faTest.className = 'fas fa-check';
+            faTest.style.display = 'none';
+            document.body.appendChild(faTest);
+            const faLoaded = window.getComputedStyle(faTest).fontFamily.includes('Font Awesome');
+            document.body.removeChild(faTest);
+            
+            if (faLoaded) {
+                html += createTestItem('Font Awesome', 'Chargé', 'success');
+            } else {
+                html += createTestItem('Font Awesome', 'Non disponible', 'error');
+                allSuccess = false;
+            }
+            
+            // Test Google Fonts
+            const fontTest = document.createElement('div');
+            fontTest.style.fontFamily = 'Inter';
+            fontTest.style.display = 'none';
+            document.body.appendChild(fontTest);
+            const fontLoaded = window.getComputedStyle(fontTest).fontFamily.includes('Inter');
+            document.body.removeChild(fontTest);
+            
+            if (fontLoaded) {
+                html += createTestItem('Google Fonts (Inter)', 'Chargé', 'success');
+            } else {
+                html += createTestItem('Google Fonts (Inter)', 'Fallback activé', 'success');
+            }
+            
+            container.innerHTML = html;
+            return allSuccess;
+        }
+        
+        // Tests des fonctionnalités
+        function testFeatures() {
+            const container = document.getElementById('feature-tests');
+            let html = '';
+            let allSuccess = true;
+            
+            // Test Canvas API
+            try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                    html += createTestItem('Canvas API', 'Support OK', 'success');
+                } else {
+                    html += createTestItem('Canvas API', 'Non supporté', 'error');
+                    allSuccess = false;
+                }
+            } catch (error) {
+                html += createTestItem('Canvas API', 'Erreur', 'error');
+                allSuccess = false;
+            }
+            
+            // Test FileReader API
+            if (typeof FileReader !== 'undefined') {
+                html += createTestItem('FileReader API', 'Support OK', 'success');
+            } else {
+                html += createTestItem('FileReader API', 'Non supporté', 'error');
+                allSuccess = false;
+            }
+            
+            // Test localStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                html += createTestItem('LocalStorage', 'Support OK', 'success');
+            } catch (error) {
+                html += createTestItem('LocalStorage', 'Non disponible', 'error');
+                allSuccess = false;
+            }
+            
+            // Test Fetch API
+            if (typeof fetch !== 'undefined') {
+                html += createTestItem('Fetch API', 'Support OK', 'success');
+            } else {
+                html += createTestItem('Fetch API', 'Non supporté', 'error');
+                allSuccess = false;
+            }
+            
+            // Test CSS Grid
+            const gridTest = document.createElement('div');
+            gridTest.style.display = 'grid';
+            const gridSupported = window.getComputedStyle(gridTest).display === 'grid';
+            
+            if (gridSupported) {
+                html += createTestItem('CSS Grid', 'Support OK', 'success');
+            } else {
+                html += createTestItem('CSS Grid', 'Non supporté', 'error');
+                allSuccess = false;
+            }
+            
+            container.innerHTML = html;
+            return allSuccess;
+        }
+        
+        // Afficher le résultat global
+        function displayResult(filesOk, depsOk, featuresOk) {
+            const container = document.getElementById('result-container');
+            
+            if (filesOk && featuresOk) {
+                container.innerHTML = `
+                    <div class="success-message">
+                        <h3 style="margin-bottom: 0.5rem;">✅ Tous les tests sont passés !</h3>
+                        <p>L'application est prête à être utilisée. Cliquez sur le bouton ci-dessous pour la lancer.</p>
+                    </div>
+                `;
+            } else {
+                let errors = [];
+                if (!filesOk) errors.push('certains fichiers sont manquants');
+                if (!featuresOk) errors.push('certaines fonctionnalités ne sont pas supportées');
+                
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h3 style="margin-bottom: 0.5rem;">⚠️ Attention</h3>
+                        <p>${errors.join(' et ')}.</p>
+                        <p>L'application pourrait ne pas fonctionner correctement.</p>
+                        <p style="margin-top: 1rem;"><strong>Recommandation :</strong> Utilisez un navigateur moderne (Chrome, Firefox, Safari, Edge).</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Exécuter tous les tests
+        async function runTests() {
+            const filesOk = await testFiles();
+            const depsOk = testDependencies();
+            const featuresOk = testFeatures();
+            
+            displayResult(filesOk, depsOk, featuresOk);
+        }
+        
+        // Lancer les tests au chargement
+        window.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

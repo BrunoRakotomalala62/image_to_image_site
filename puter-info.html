@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puter.js - Stockage Cloud Gratuit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .highlight-box h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .highlight-box p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .benefit-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h3 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefit-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .comparison {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .comparison h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f1f5f9;
+        }
+        
+        .check {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .cross {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        
+        .info-section {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .info-section h3 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-section li {
+            color: #1e3a8a;
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .info-section li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .cta {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">☁️</div>
+            <h1>Puter.js</h1>
+            <p class="subtitle">Stockage Cloud Gratuit et Illimité</p>
+        </div>
+        
+        <div class="highlight-box">
+            <h2>🎉 100% Gratuit • ∞ Illimité • 🔒 Sécurisé</h2>
+            <p>Puter.js offre un stockage cloud professionnel sans aucun coût ni limite.<br>
+            <strong>Pas de clés API • Pas d'abonnement • Pas de frais cachés</strong></p>
+        </div>
+        
+        <div class="benefits">
+            <div class="benefit-card">
+                <div class="benefit-icon">🆓</div>
+                <h3>Totalement gratuit</h3>
+                <p>Aucun coût, jamais. Pas de carte bancaire requise.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">∞</div>
+                <h3>Stockage illimité</h3>
+                <p>Aucune limite de taille ou de nombre de fichiers.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🔓</div>
+                <h3>Sans clés API</h3>
+                <p>Authentification simple via navigateur.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🌐</div>
+                <h3>Multi-appareils</h3>
+                <p>Synchronisé sur tous vos appareils.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">⚡</div>
+                <h3>Ultra rapide</h3>
+                <p>Accès instantané à vos données.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🔒</div>
+                <h3>Sécurisé</h3>
+                <p>Données chiffrées et privées.</p>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3><i class="fas fa-info-circle"></i> Comment ça marche dans AI Image Transform</h3>
+            <ul>
+                <li>Première visite : Connexion simple via popup Puter (gratuit)</li>
+                <li>Toutes vos images transformées sont sauvegardées dans le cloud</li>
+                <li>Accédez à votre galerie depuis n'importe quel appareil</li>
+                <li>Synchronisation automatique et instantanée</li>
+                <li>Backup local automatique si vous êtes hors ligne</li>
+            </ul>
+        </div>
+        
+        <div class="comparison">
+            <h2>Comparaison avec autres solutions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Solution</th>
+                        <th>Coût</th>
+                        <th>Limite stockage</th>
+                        <th>Clés API</th>
+                        <th>Configuration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #d1fae5;">
+                        <td><strong>Puter.js</strong></td>
+                        <td class="check">Gratuit</td>
+                        <td class="check">Illimité</td>
+                        <td class="check">Non requis</td>
+                        <td class="check">Simple</td>
+                    </tr>
+                    <tr>
+                        <td>Firebase</td>
+                        <td class="cross">Payant</td>
+                        <td class="cross">Limité</td>
+                        <td class="cross">Oui</td>
+                        <td class="cross">Complexe</td>
+                    </tr>
+                    <tr>
+                        <td>AWS S3</td>
+                        <td class="cross">Payant</td>
+                        <td class="cross">Par usage</td>
+                        <td class="cross">Oui</td>
+                        <td class="cross">Très complexe</td>
+                    </tr>
+                    <tr>
+                        <td>LocalStorage</td>
+                        <td class="check">Gratuit</td>
+                        <td class="cross">~5-10 MB</td>
+                        <td class="check">Non</td>
+                        <td class="check">Simple</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="info-section" style="background: #fef3c7; border-left-color: #f59e0b;">
+            <h3 style="color: #92400e;"><i class="fas fa-lightbulb"></i> Le saviez-vous ?</h3>
+            <ul>
+                <li style="color: #78350f;">Puter.js est un projet open-source soutenu par une communauté active</li>
+                <li style="color: #78350f;">Plus de 100 000 développeurs utilisent Puter.js dans le monde</li>
+                <li style="color: #78350f;">L'infrastructure est conçue pour être scalable et fiable</li>
+                <li style="color: #78350f;">Vous gardez le contrôle total de vos données</li>
+            </ul>
+        </div>
+        
+        <div class="cta">
+            <h2 style="color: #333; margin-bottom: 1.5rem;">Prêt à commencer ?</h2>
+            <a href="index.html" class="btn">
+                <i class="fas fa-rocket"></i> Lancer l'application
+            </a>
+            <a href="PUTER_GUIDE.md" class="btn btn-secondary">
+                <i class="fas fa-book"></i> Guide complet
+            </a>
+        </div>
+        
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e2e8f0; text-align: center; color: #666;">
+            <p><strong>Ressources officielles :</strong></p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://puter.com" target="_blank" style="color: #667eea; margin: 0 1rem;">Site officiel</a>
+                <a href="https://docs.puter.com" target="_blank" style="color: #667eea; margin: 0 1rem;">Documentation</a>
+                <a href="https://github.com/HeyPuter/puter" target="_blank" style="color: #667eea; margin: 0 1rem;">GitHub</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
